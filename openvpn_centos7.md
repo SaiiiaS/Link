@@ -106,24 +106,35 @@ This is going to take a long time
 
 `mkdir config`
 `cp /etc/openvpn/sample-config-files/server.conf /etc/openvpn/config`
+
 `cd /etc/openvpn/easy-rsa`
+
 `p dh1024.pem server.key server.crt ca.crt /etc/openvpn/config`
+
 
 Cấu hình chức năng Forwarding (dùng để thực hiện Lan Routing)
 
 `vi /etc/sysctl.conf`
+
 `net.ipv4.ip_forward = 1`
+
 `sysctl –p (để cho các thông số có hiệu lực)`
+
 `echo 1 > /proc/sys/net/ipv4/ip_forward`
 
 Cấu hình VPN Server
 
 – Copy file cấu hình server.conf mẫu từ source cài đặt vào /etc/openvpn/
+
 `cp /root/openvpn-2.2.2/sample-config-files/server.conf /etc/openvpn/`
+
 – Chỉnh sửa file cấu hình:
 
+
 `cd /etc/openvpn/`
+
 `vi server.conf local 192.168.1.200 (chọn card mạng user quay VPN đến, có thể không cần option này)`
+
 ```sh
 port 199 (default là 1194)
 proto udp (protocol udp)
@@ -145,13 +156,21 @@ push “dhcp-option DNS (WINS) 10.8.0.1” đẩy DNS or WINS config vào VPN Cl
 
 Cấu hình file IP tĩnh tương ứng với từng User:
 Sau khi đã cấu hình server, tiếp đó ta sẽ cấu hình các file đặt trong thư mục cdd/ tương ứng với từng User VPN.+ Tạo thư mục ccd (/etc/openvpn/ccd)
+
 `mkdir /etc/openvpn/ccd`
+
 + Tạo profile cho user hautp
+
 `vi /etc/openvpn/ccd/hautp`
+
 `ifconfig-push 10.8.0.2 10.8.0.1 theo file cấu hình trên user hautp sẽ nhận IP là 10.8.0.2. Cặp IP khai báo trong lệnh trên phải thuộc bảng bên dưới, ứng với mỗi user sẽ có 1 cặp ip tương ứng.`
+
 Start VPN Server
+
 `p /root/openvpn-2.2.2/sample-scripts/openvpn.init /etc/init.d/openvpn`
+
 `/etc/init.d/openvpn start`
+
 Các bạn kiểm tra lại log để giải quyết lỗi nhé.
 Phần 2 : Thiết lập Open VPN Client .
 
