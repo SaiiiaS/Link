@@ -1,0 +1,30 @@
+## 1. Cài đặt Wazuh agent
+
+### 1.1. Cài đặt Wazuh agent trên Debian/Ubuntu
+
+Thêm Wazuh repo 
+
+ - Cài đặt các gói bổ trợ :
+```sh
+apt-get install curl apt-transport-https lsb-release -y
+```
+
+ - Install Wazuh repo GPG key :
+```sh
+curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | apt-key add -
+```
+
+ - Tìm tên của OS và thêm vào repo
+```sh
+echo "deb https://packages.wazuh.com/3.x/apt/ stable main" | tee /etc/apt/sources.list.d/wazuh.list
+```
+
+ - Update thông tin package
+```sh
+apt-get update -y
+```
+
+ - Install Wazuh agent
+```sh
+apt-get install wazuh-agent -y
+```
